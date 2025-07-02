@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerador de Sinais - Opções Binárias</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
+      color: #00ffe7;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 2rem;
+      text-shadow: 0 0 10px #00ffe7;
+    }
+    .painel {
+      background: #111;
+      border: 2px solid #00ffe7;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 0 20px #00ffe7;
+      width: 320px;
+      text-align: center;
+    }
+    button, select {
+      background-color: #00ffe7;
+      color: #111;
+      font-weight: bold;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffe7;
+      transition: 0.3s;
+      font-family: 'Orbitron', sans-serif;
+    }
+    button:hover, select:hover {
+      background-color: #0ff;
+    }
+    select {
+      width: 100%;
+    }
+    #sinal {
+      margin-top: 15px;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gerador de Sinais 🔮</h1>
+  <div class="painel">
+    <label for="paresSelect">Selecione o par de moeda:</label>
+    <select id="paresSelect">
+      <option value="EUR/USD">EUR/USD</option>
+      <option value="EUR/USD-OTC">EUR/USD-OTC</option>
+      <option value="GBP/USD">GBP/USD</option>
+      <option value="USD/JPY">USD/JPY</option>
+    </select>
+
+    <button onclick="gerarSinal()">Gerar Sinal</button>
+    <div id="sinal">Aguardando sinal...</div>
+  </div>
+
+  <script>
+    function gerarSinal() {
+      const parSelecionado = document.getElementById('paresSelect').value;
+      const direcao = Math.random() > 0.5 ? 'CALL 🔼' : 'PUT 🔽';
+      const fluxo = Math.floor(Math.random() * 4) + 2;
+      const ssmaRompido = Math.random() > 0.6;
+      const regiao00 = Math.random() > 0.7;
+      const porcentagem = Math.floor(Math.random() * 20) + 80;
+
+      const agora = new Date();
+      const hora = agora.getHours().toString().padStart(2, '0');
+      const minutos = agora.getMinutes().toString().padStart(2, '0');
+      const segundos = agora.getSeconds().toString().padStart(2, '0');
+      const horarioEntrada = `${hora}:${minutos}:${segundos}`;
+
+      if (ssmaRompido && regiao00 && fluxo >= 3) {
+        document.getElementById('sinal').innerHTML = `
+          🎯 <strong>${parSelecionado}</strong><br>
+          SINAL FORTE: ${direcao}<br>
+          Fluxo de ${fluxo} velas<br>
+          SSMA 9 Rompida<br>
+          Região 00 Rompida<br>
+          💹 Probabilidade: <strong>${porcentagem}%</strong><br>
+          🕒 Entrada às: <strong>${horarioEntrada}</strong>
+        `;
+      } else {
+        document.getElementById('sinal').innerHTML = `⚠️ Sinal fraco para <strong>${parSelecionado}</strong> - aguardando condição ideal...`;
+      }
+    }
+  </script>
+</body>
+</html>
